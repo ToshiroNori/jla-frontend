@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/authSlice";
 import { getJobs } from "../../features/jobSlice";
+import Navbar from "../partials/Navbar";
 
 export default function Dashboard() {
   const { user, loading, error } = useSelector((state) => state.auth);
@@ -33,11 +34,16 @@ export default function Dashboard() {
   }, []);
 
   if (loading || jobLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full h-screen bg-[#27272A] flex flex-col items-center justify-center text-[#FAFAFA]">
+        <h1 className="border-4 border-[#fafafa] border-t-[#09090B] rounded-full w-16 h-16 animate-spin"></h1>
+      </div>
+    );
   }
 
   return (
     <div>
+      <Navbar />
       <h1>Welcome {user?.candidate.name}</h1>
       <button onClick={handleLogout} type="button">
         Logout
