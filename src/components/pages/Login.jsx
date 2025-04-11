@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { user, loading, error, authChecked } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,24 +19,15 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (user) {
+    if (!loading && user && authChecked) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, loading, navigate, authChecked]);
 
-  if (loading) {
+  if (!authChecked) {
     return (
       <div className="w-full h-screen bg-[#27272A] flex flex-col items-center justify-center text-[#FAFAFA]">
         <h1 className="border-4 border-[#fafafa] border-t-[#09090B] rounded-full w-16 h-16 animate-spin"></h1>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>
-        <Link to="/register">Register</Link>
-        <h1>{error}</h1>
       </div>
     );
   }
@@ -50,8 +43,8 @@ export default function Login() {
             </span>
           </div>
 
-          <div className="">
-            <label htmlFor="username">Email:</label>
+          <div>
+            <label htmlFor="email">Email:</label>
             <input
               className="w-full bg-[#09090B] text-[#FAFAFA] border-b-2 border-[#71717A] focus:outline-none focus:border-[#FBBF24] placeholder:text-[#71717A] p-2"
               value={email}
@@ -74,18 +67,14 @@ export default function Login() {
               required
             />
           </div>
-          <div>
+
+          <div className="flex justify-between items-center">
             <Link
               to="/forgot-password"
               className="text-[#FBBF24] text-sm font-medium hover:underline"
             >
               Forgot password?
             </Link>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-[#71717A] text-sm font-medium">
-              Don't have an account?
-            </span>
             <Link
               to="/register"
               className="text-[#FBBF24] text-sm font-medium hover:underline"
@@ -93,14 +82,17 @@ export default function Login() {
               Register
             </Link>
           </div>
+
+          <button
+            type="submit"
+            className="text-black px-4 py-2 rounded w-full cursor-pointer bg-[#FAFAFA]"
+          >
+            Login
+          </button>
         </form>
-        <button
-          onClick={handleSubmit}
-          type="submit"
-          className="text-black px-4 py-2 rounded w-full cursor-pointer bg-[#FAFAFA]"
-        >
-          Login
-        </button>
+        {error && (
+          <h1 className="text-red-500 uppercase text-center">{error}</h1>
+        )}
       </div>
     </div>
   );
