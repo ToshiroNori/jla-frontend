@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Navbar({ user }) {
+export default function Navbar({ handleLogout }) {
   return (
     <div>
       <nav className="bg-[#09090B]  shadow-lg p-4 text-[#fafafa]">
@@ -10,7 +10,9 @@ export default function Navbar({ user }) {
             <li>Home</li>
             <li>About</li>
             <li>Contact</li>
-            <li>Logout</li>
+            <li>
+              <button onClick={handleLogout}>Logout</button>
+            </li>
           </ul>
         </div>
       </nav>

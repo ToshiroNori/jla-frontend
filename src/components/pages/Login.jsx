@@ -19,14 +19,14 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (!loading && user && authChecked) {
+    if (!loading && user) {
       navigate("/");
     }
-  }, [user, loading, navigate, authChecked]);
+  }, [user, navigate]);
 
-  if (!authChecked) {
+  if (loading) {
     return (
-      <div className="w-full h-screen bg-[#27272A] flex flex-col items-center justify-center text-[#FAFAFA]">
+      <div className="w-full h-screen bg-[#0c0c1a] flex flex-col items-center justify-center text-[#FAFAFA]">
         <h1 className="border-4 border-[#fafafa] border-t-[#09090B] rounded-full w-16 h-16 animate-spin"></h1>
       </div>
     );

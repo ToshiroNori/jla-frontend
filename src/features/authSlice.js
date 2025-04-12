@@ -136,7 +136,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.user = null;
-        state.authChecked = true; // ✅ This ensures the app checks auth status before proceeding
+        state.authChecked = false;
       });
   },
 });

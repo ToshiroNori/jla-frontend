@@ -4,7 +4,7 @@ import axios from "axios";
 export const getJobs = createAsyncThunk("job/getJobs", async (thunkAPI) => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/candidate/`,
+      `${import.meta.env.VITE_API_URL}/api/jobs/`,
       { withCredentials: true }
     );
     return response.data;
