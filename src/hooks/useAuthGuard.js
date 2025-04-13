@@ -1,17 +1,23 @@
-// src/hooks/useAuthGuard.js
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// hooks/useAuthGuard.js
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "@/features/authSlice";
+import { useNavigate } from "react-router-dom";
 
-export const useAuthGuard = () => {
-  const { user, authChecked } = useSelector((state) => state.auth);
+export function useAuthGuard() {
+  const { user, loading, isAuth } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authChecked && !user) {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!loading && !user && !isAuth) {
       navigate("/login");
     }
-  }, [authChecked, user, navigate]);
+  }, [loading, user, isAuth, navigate]);
 
-  return { user, authChecked };
-};
+  return { user, loading, isAuth };
+}

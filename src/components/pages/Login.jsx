@@ -6,31 +6,20 @@ import { useState, useEffect } from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, loading, error, authChecked } = useSelector(
-    (state) => state.auth
-  );
+  const { loading, error, user, isAuth } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Redirect if the user is already authenticated
+  useEffect(() => {
+    if (isAuth) navigate("/"); // If already logged in, go home
+  }, [isAuth, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { email, password };
-    dispatch(login(userData));
+    dispatch(login({ email, password }));
   };
-
-  useEffect(() => {
-    if (!loading && user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
-
-  if (loading) {
-    return (
-      <div className="w-full h-screen bg-[#0c0c1a] flex flex-col items-center justify-center text-[#FAFAFA]">
-        <h1 className="border-4 border-[#fafafa] border-t-[#09090B] rounded-full w-16 h-16 animate-spin"></h1>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full h-screen bg-[#27272A] flex flex-col items-center justify-center text-[#FAFAFA]">
@@ -55,6 +44,7 @@ export default function Login() {
               required
             />
           </div>
+
           <div>
             <label htmlFor="password">Password:</label>
             <input
@@ -86,12 +76,14 @@ export default function Login() {
           <button
             type="submit"
             className="text-black px-4 py-2 rounded w-full cursor-pointer bg-[#FAFAFA]"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
         {error && (
-          <h1 className="text-red-500 uppercase text-center">{error}</h1>
+          <h1 className="text-red-500 uppercase text-center mt-4">{error}</h1>
         )}
       </div>
     </div>

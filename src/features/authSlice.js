@@ -67,7 +67,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    authChecked: false,
+    isAuth: false,
     user: null,
     error: null,
     loading: false,
@@ -87,6 +87,8 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.isAuth = true;
+        state.error = null; // Clear error on successful login
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -101,6 +103,7 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.error = null; // Clear error on successful register
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -115,6 +118,8 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
         state.user = null;
+        state.isAuth = false;
+        state.error = null; // Clear error on successful logout
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
@@ -130,13 +135,13 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.user = action.payload;
-        state.authChecked = true;
+        state.isAuth = true;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.user = null;
-        state.authChecked = false;
+        state.isAuth = false;
       });
   },
 });
