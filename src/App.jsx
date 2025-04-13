@@ -9,11 +9,10 @@ function App() {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
+        autoClose={2000}
+        hideProgressBar={true}
         newestOnTop
         closeOnClick
-        pauseOnHover
         theme="dark"
         limit={1}
       />

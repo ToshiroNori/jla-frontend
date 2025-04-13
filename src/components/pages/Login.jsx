@@ -1,96 +1,165 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../features/authSlice";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { login } from "../../features/authSlice";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 import Spinner from "../Spinner";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Paper,
+  Stack,
+  InputAdornment,
+} from "@mui/material";
+import { Email, Lock } from "@mui/icons-material";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { loading, error, user, isAuth } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Redirect if the user is already authenticated
-  useEffect(() => {
-    if (isAuth) navigate("/"); // If already logged in, go home
-  }, [isAuth, navigate]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { loading, error, isAuth } = useAuthGuard();
 
-  if (loading) {
-    <Spinner />;
-  }
+  useEffect(() => {
+    if (isAuth) navigate("/");
+  }, [isAuth, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
   };
 
-  return (
-    <div className="w-full h-screen bg-[#27272A] flex flex-col items-center justify-center text-[#FAFAFA]">
-      <div className="w-md bg-[#09090B] shadow-lg rounded-lg p-6 space-y-2">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="text-center">
-            <h1 className="text-4xl font-semibold">Welcome back</h1>
-            <span className="text-[#71717A] text-1xl font-medium">
-              Login to your Acme Inc account
-            </span>
-          </div>
+  if (loading) return <Spinner />;
 
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              className="w-full bg-[#09090B] text-[#FAFAFA] border-b-2 border-[#71717A] focus:outline-none focus:border-[#FBBF24] placeholder:text-[#71717A] p-2"
+  return (
+    <Box className="min-h-screen flex justify-center items-center bg-[#F9F9F9] p-4">
+      <Paper
+        elevation={4}
+        sx={{
+          padding: 4,
+          width: "100%",
+          maxWidth: 450,
+          borderRadius: "16px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+          backgroundColor: "#FFFFFF",
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h1"
+          align="center"
+          gutterBottom
+          sx={{ fontWeight: 700, color: "#09090B" }}
+        >
+          Welcome back
+        </Typography>
+
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{ marginBottom: 3, color: "#4B5563" }}
+        >
+          Login to your Acme Inc account.
+        </Typography>
+
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={2}>
+            <TextField
+              label="Email Address"
+              variant="outlined"
+              name="email"
+              type="email"
+              fullWidth
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              id="email"
-              name="email"
-              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email />
+                  </InputAdornment>
+                ),
+              }}
             />
-          </div>
 
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              className="w-full bg-[#09090B] text-[#FAFAFA] border-b-2 border-[#71717A] focus:outline-none focus:border-[#FBBF24] placeholder:text-[#71717A] p-2"
+            <TextField
+              label="Password"
+              variant="outlined"
+              name="password"
+              type="password"
+              fullWidth
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              id="password"
-              name="password"
-              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock />
+                  </InputAdornment>
+                ),
+              }}
             />
-          </div>
 
-          <div className="flex justify-between items-center">
-            <Link
-              to="/forgot-password"
-              className="text-[#FBBF24] text-sm font-medium hover:underline"
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              Forgot password?
-            </Link>
-            <Link
-              to="/register"
-              className="text-[#FBBF24] text-sm font-medium hover:underline"
-            >
-              Register
-            </Link>
-          </div>
+              <Link
+                to="/forgot-password"
+                style={{
+                  textDecoration: "none",
+                  color: "#FBBF24",
+                  fontWeight: 500,
+                }}
+              >
+                Forgot password?
+              </Link>
+              <Link
+                to="/register"
+                style={{
+                  textDecoration: "none",
+                  color: "#FBBF24",
+                  fontWeight: 500,
+                }}
+              >
+                Register
+              </Link>
+            </Stack>
 
-          <button
-            type="submit"
-            className="text-black px-4 py-2 rounded w-full cursor-pointer bg-[#FAFAFA]"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              disabled={loading}
+              sx={{
+                backgroundColor: "#09090B",
+                borderRadius: "12px",
+                paddingY: 1.5,
+                fontWeight: 600,
+                "&:hover": { backgroundColor: "#1C1C1E" },
+              }}
+            >
+              {loading ? "Logging in..." : "Login"}
+            </Button>
+          </Stack>
         </form>
 
         {error && (
-          <h1 className="text-red-500 uppercase text-center mt-4">{error}</h1>
+          <Typography
+            color="error"
+            variant="body2"
+            align="center"
+            sx={{ marginTop: 2 }}
+          >
+            {error}
+          </Typography>
         )}
-      </div>
-    </div>
+      </Paper>
+    </Box>
   );
 }

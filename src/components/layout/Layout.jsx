@@ -3,7 +3,7 @@ import Navbar from "../partials/Navbar";
 import Sidebar from "../partials/Sidebar";
 
 export default function Layout({ children }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

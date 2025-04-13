@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 axios.defaults.withCredentials = true;
 
@@ -70,7 +71,7 @@ export const authSlice = createSlice({
     isAuth: false,
     user: null,
     error: null,
-    loading: false,
+    loading: true,
   },
   reducers: {
     clearError: (state) => {
@@ -89,10 +90,12 @@ export const authSlice = createSlice({
         state.user = action.payload;
         state.isAuth = true;
         state.error = null; // Clear error on successful login
+        toast.success("Login Success");
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.error("Login failed");
       })
 
       // Register action
@@ -120,9 +123,10 @@ export const authSlice = createSlice({
         state.user = null;
         state.isAuth = false;
         state.error = null; // Clear error on successful logout
+        toast.success("Logout Success");
       })
       .addCase(logout.rejected, (state, action) => {
-        state.loading = false;
+        state.loading = true;
         state.error = action.payload;
       })
 

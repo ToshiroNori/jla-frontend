@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../features/authSlice";
+import { clearError } from "../../features/authSlice";
 import {
   Mail,
   Briefcase,
@@ -26,6 +27,7 @@ export default function Navbar({ handleToggleSidebar, isSidebarOpen }) {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearError());
     navigate("/login");
   };
 
