@@ -32,7 +32,9 @@ export default function Login() {
     dispatch(login({ email, password }));
   };
 
-  if (loading) return <Spinner />;
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <Box className="min-h-screen flex justify-center items-center bg-[#F9F9F9] p-4">
