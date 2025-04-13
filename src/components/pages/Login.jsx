@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/authSlice";
 import { useState, useEffect } from "react";
+import Spinner from "../Spinner";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,10 @@ export default function Login() {
   useEffect(() => {
     if (isAuth) navigate("/"); // If already logged in, go home
   }, [isAuth, navigate]);
+
+  if (loading) {
+    <Spinner />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

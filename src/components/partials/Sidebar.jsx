@@ -1,6 +1,25 @@
 import React from "react";
 import { FolderKanban, Briefcase, Settings, User } from "lucide-react";
 
+const lists = [
+  {
+    text: "Category",
+    icon: <FolderKanban size={20} />,
+  },
+  {
+    text: "Employer",
+    icon: <Briefcase size={20} />,
+  },
+  {
+    text: "Settings",
+    icon: <Settings size={20} />,
+  },
+  {
+    text: "Account",
+    icon: <User size={20} />,
+  },
+];
+
 export default function Sidebar({ isSidebarOpen }) {
   return (
     <>
@@ -12,23 +31,16 @@ export default function Sidebar({ isSidebarOpen }) {
         }`}
       >
         <h1 className="text-center text-3xl font-medium">Menu</h1>
-        <ul className="space-y-4 w-full">
-          <li className="w-full flex items-center justify-center gap-3 hover:text-[#FBBF24] cursor-pointer px-4">
-            <FolderKanban size={20} />
-            <span>Category</span>
-          </li>
-          <li className="w-full flex items-center justify-center gap-3 hover:text-[#FBBF24] cursor-pointer px-4">
-            <Briefcase size={20} />
-            <span>Employer</span>
-          </li>
-          <li className="w-full flex items-center justify-center gap-3 hover:text-[#FBBF24] cursor-pointer px-4">
-            <Settings size={20} />
-            <span>Settings</span>
-          </li>
-          <li className="w-full flex items-center justify-center gap-3 hover:text-[#FBBF24] cursor-pointer px-4">
-            <User size={20} />
-            <span>Account</span>
-          </li>
+        <ul>
+          {lists.map((list, index) => (
+            <li
+              key={index}
+              className="p-2 w-full flex items-center justify-center gap-3 hover:text-[#FBBF24] cursor-pointer px-4"
+            >
+              {list.icon}
+              <span>{list.text}</span>
+            </li>
+          ))}
         </ul>
       </aside>
     </>

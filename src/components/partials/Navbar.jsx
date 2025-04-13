@@ -30,7 +30,7 @@ export default function Navbar({ handleToggleSidebar, isSidebarOpen }) {
   };
 
   return (
-    <nav className="bg-[#09090B] shadow-lg p-4 text-[#fafafa] fixed top-0 left-0 w-full z-50">
+    <nav className="bg-[#09090B] shadow-lg p-4 text-[#fafafa] fixed top-0 left-0 w-full z-50 font-[roboto]">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         {/* Logo */}
         <div className="flex justify-between items-center gap-3">
@@ -46,7 +46,7 @@ export default function Navbar({ handleToggleSidebar, isSidebarOpen }) {
             />
           )}
 
-          <h1 className="text-3xl font-semibold">Joblify</h1>
+          <h1 className="text-3xl font-[mono] font-bold">Joblify</h1>
         </div>
 
         {/* Navigation Links in a Row */}
