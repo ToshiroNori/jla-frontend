@@ -25,8 +25,8 @@ export default function Navbar({ handleToggleSidebar, isSidebarOpen }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    await dispatch(logout());
     dispatch(clearError());
     navigate("/login");
   };
