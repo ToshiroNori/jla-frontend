@@ -33,7 +33,7 @@ export default function Login() {
   };
 
   if (loading) {
-    return <Spinner />;
+    <Spinner />;
   }
 
   return (
@@ -64,7 +64,7 @@ export default function Login() {
           align="center"
           sx={{ marginBottom: 3, color: "#4B5563" }}
         >
-          Login to your Acme Inc account.
+          Login to your to see job and setup your account.
         </Typography>
 
         <form onSubmit={handleSubmit}>
