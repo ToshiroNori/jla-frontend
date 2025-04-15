@@ -86,7 +86,7 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.loading = true;
+        state.loading = false;
         state.user = action.payload;
         state.isAuth = true;
         state.error = null; // Clear error on successful login

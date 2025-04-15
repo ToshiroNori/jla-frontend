@@ -19,10 +19,10 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user && isAuth) {
+    if (user && isAuth && !loading) {
       dispatch(getJobs());
     }
-  }, [dispatch, user, isAuth]);
+  }, [dispatch, user, isAuth, loading]);
 
   if (jobLoading || loading) {
     return <Spinner />;
@@ -54,7 +54,7 @@ export default function Dashboard() {
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 p-6">
         {jobs.map((job) => (
           <div
-            className="shadow-lg p-6 rounded-2xl flex flex-col justify-between space-y-3 bg-white font-roboto"
+            className="hover:scale-105 transition-transform duration-300 shadow-lg p-6 rounded-2xl flex flex-col justify-between space-y-3 bg-white font-roboto"
             key={job._id}
           >
             <h2 className="font-bold text-2xl text-gray-900 mb-1">

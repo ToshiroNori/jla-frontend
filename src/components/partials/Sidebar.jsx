@@ -24,7 +24,7 @@ export default function Sidebar({ isSidebarOpen }) {
   return (
     <>
       <aside
-        className={` h-screen py-24 px-2  space-y-5 fixed top-0 left-0 z-10 transition-all duration-300 ease-in-out shadow-lg ${
+        className={` h-screen py-24  space-y-5 fixed top-0 left-0 z-10 transition-all duration-300 ease-in-out shadow-lg ${
           isSidebarOpen
             ? "w-[300px] translate-x-0"
             : "w-0 -translate-x-full overflow-hidden"
